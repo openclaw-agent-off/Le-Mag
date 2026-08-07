@@ -41,9 +41,30 @@ function prism_module_catalog(): array {
 }
 
 add_action('admin_menu', function (): void {
-    add_menu_page('Le Mag', 'Le Mag', 'manage_options', 'prism-modules', 'prism_modules_page', 'dashicons-admin-customizer', 30);
-    add_submenu_page('prism-modules', __('Modules', 'prism-blocks'), __('Modules', 'prism-blocks'), 'manage_options', 'prism-modules', 'prism_modules_page');
+    add_menu_page('Le Mag', 'Le Mag', 'manage_options', 'lemag-dashboard', 'lemag_dashboard_page', 'dashicons-admin-customizer', 30);
+    add_submenu_page('lemag-dashboard', __('Tableau de bord', 'prism-blocks'), __('Tableau de bord', 'prism-blocks'), 'manage_options', 'lemag-dashboard', 'lemag_dashboard_page');
+    add_submenu_page('lemag-dashboard', __('Modules', 'prism-blocks'), __('Modules', 'prism-blocks'), 'manage_options', 'prism-modules', 'prism_modules_page');
 });
+
+function lemag_dashboard_page(): void {
+    if (!current_user_can('manage_options')) return;
+    $modules = prism_modules();
+    $active = count(array_filter($modules, static function (array $module): bool { return !empty($module['active']); }));
+    ?>
+    <div class="wrap lemag-dashboard">
+      <h1>Le Mag</h1>
+      <p class="description">Bienvenue dans le tableau de bord de votre thème magazine.</p>
+      <div class="lemag-dashboard-grid">
+        <div class="lemag-dashboard-card"><span class="dashicons dashicons-admin-appearance"></span><h2>Personnaliser le site</h2><p>Modifiez le logo, les couleurs, la typographie et les options générales.</p><a class="button button-primary" href="<?php echo esc_url(admin_url('customize.php')); ?>">Ouvrir le personnalisateur</a></div>
+        <div class="lemag-dashboard-card"><span class="dashicons dashicons-admin-plugins"></span><h2>Modules</h2><p><?php echo esc_html($active); ?> module(s) actif(s). Activez uniquement les fonctions utiles à votre site.</p><a class="button" href="<?php echo esc_url(admin_url('admin.php?page=prism-modules')); ?>">Gérer les modules</a></div>
+        <div class="lemag-dashboard-card"><span class="dashicons dashicons-layout"></span><h2>Kits de site</h2><p>Importez une mise en page magazine complète en quelques clics.</p><a class="button" href="<?php echo esc_url(admin_url('admin.php?page=prism-kits')); ?>">Ouvrir les kits</a></div>
+      </div>
+      <style>
+      .lemag-dashboard{max-width:1100px}.lemag-dashboard-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-top:28px}.lemag-dashboard-card{background:#fff;border:1px solid #dcdcde;border-radius:10px;padding:24px;box-shadow:0 1px 2px #0000000d}.lemag-dashboard-card .dashicons{color:#e2003a;font-size:30px;width:30px;height:30px}.lemag-dashboard-card h2{font-size:18px;margin:18px 0 8px}.lemag-dashboard-card p{min-height:48px;color:#646970;line-height:1.5}
+      </style>
+    </div>
+    <?php
+}
 
 add_action('admin_init', function (): void {
     if (!isset($_POST['prism_modules_save']) || !current_user_can('manage_options')) return;

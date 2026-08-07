@@ -6,7 +6,7 @@ defined('ABSPATH') || exit;
 
 add_action('admin_menu', function () {
     add_submenu_page(
-        'prism-modules',
+        'lemag-dashboard',
         __('Kits', 'prism-blocks'),
         __('Kits', 'prism-blocks'),
         'manage_options',
