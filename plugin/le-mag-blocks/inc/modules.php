@@ -1,6 +1,6 @@
 <?php
 /**
- * Prism — Modules hub and lightweight module settings.
+ * Le Mag — Modules hub and lightweight module settings.
  */
 defined('ABSPATH') || exit;
 
@@ -34,14 +34,14 @@ function prism_module_catalog(): array {
         'font-library' => ['name' => __('Font Library', 'prism-blocks'), 'description' => __('Choisissez et chargez les polices Google du site.', 'prism-blocks')],
         'menu-plus' => ['name' => __('Menu Plus', 'prism-blocks'), 'description' => __('Header mobile, navigation sticky et panneau latéral.', 'prism-blocks')],
         'secondary-nav' => ['name' => __('Secondary Nav', 'prism-blocks'), 'description' => __('Ajoutez un second menu de navigation.', 'prism-blocks')],
-        'site-library' => ['name' => __('Bibliothèque de Sites', 'prism-blocks'), 'description' => __('Importez les kits Prism prêts à l’emploi.', 'prism-blocks')],
+        'site-library' => ['name' => __('Bibliothèque de Sites', 'prism-blocks'), 'description' => __('Importez les kits Le Mag prêts à l’emploi.', 'prism-blocks')],
         'spacing' => ['name' => __('Espacement', 'prism-blocks'), 'description' => __('Réglez la largeur et les espacements globaux.', 'prism-blocks')],
         'woocommerce' => ['name' => __('WooCommerce', 'prism-blocks'), 'description' => __('Ajoutez les réglages de base pour votre boutique.', 'prism-blocks')],
     ];
 }
 
 add_action('admin_menu', function (): void {
-    add_menu_page('Prism', 'Prism', 'manage_options', 'prism-modules', 'prism_modules_page', 'dashicons-admin-customizer', 30);
+    add_menu_page('Le Mag', 'Le Mag', 'manage_options', 'prism-modules', 'prism_modules_page', 'dashicons-admin-customizer', 30);
     add_submenu_page('prism-modules', __('Modules', 'prism-blocks'), __('Modules', 'prism-blocks'), 'manage_options', 'prism-modules', 'prism_modules_page');
 });
 
@@ -80,7 +80,7 @@ function prism_modules_page(): void {
     $catalog = prism_module_catalog();
     ?>
     <div class="wrap prism-modules-wrap">
-      <h1>Prism — Modules</h1>
+      <h1>Le Mag — Modules</h1>
       <p class="description">Activez les fonctionnalités dont votre site a besoin. Les réglages sont conservés lors des mises à jour.</p>
       <?php if (isset($_GET['updated'])): ?><div class="notice notice-success is-dismissible"><p><?php esc_html_e('Modules enregistrés.', 'prism-blocks'); ?></p></div><?php endif; ?>
       <form method="post">
@@ -112,12 +112,12 @@ function prism_modules_page(): void {
             <?php elseif ($slug === 'secondary-nav'): ?>
               <p>Créez un menu dans <a href="<?php echo esc_url(admin_url('nav-menus.php')); ?>">Apparence → Menus</a>, puis assignez-le à l’emplacement Secondary Nav.</p>
             <?php elseif ($slug === 'site-library'): ?>
-              <p>Les kits sont disponibles dans <a href="<?php echo esc_url(admin_url('admin.php?page=prism-kits')); ?>">Prism → Kits</a>.</p>
+              <p>Les kits sont disponibles dans <a href="<?php echo esc_url(admin_url('admin.php?page=prism-kits')); ?>">Le Mag → Kits</a>.</p>
             <?php elseif ($slug === 'spacing'): ?>
               <label>Largeur contenu <input type="text" name="prism[spacing][content]" value="<?php echo esc_attr($data['content']); ?>"></label>
               <label>Espacement <input type="text" name="prism[spacing][gap]" value="<?php echo esc_attr($data['gap']); ?>"></label>
             <?php elseif ($slug === 'woocommerce'): ?>
-              <p><?php echo class_exists('WooCommerce') ? esc_html__('WooCommerce détecté : les styles Prism sont actifs.', 'prism-blocks') : esc_html__('Installez WooCommerce pour activer les réglages de boutique.', 'prism-blocks'); ?></p>
+              <p><?php echo class_exists('WooCommerce') ? esc_html__('WooCommerce détecté : les styles Le Mag sont actifs.', 'prism-blocks') : esc_html__('Installez WooCommerce pour activer les réglages de boutique.', 'prism-blocks'); ?></p>
             <?php endif; ?>
             </div>
           </section>

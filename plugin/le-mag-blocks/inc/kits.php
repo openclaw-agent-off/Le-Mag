@@ -1,6 +1,6 @@
 <?php
 /**
- * Prism Blocks — Site Kits (templates magazine prêts à importer)
+ * Le Mag Blocks — Site Kits (templates magazine prêts à importer)
  */
 defined('ABSPATH') || exit;
 
@@ -23,7 +23,7 @@ function prism_kits_page() {
             <div class="prism-admin-logo">
                 <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect width="36" height="36" rx="10" fill="#E2003A"/><path d="M12 25V11l7 9 7-9v14" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 <div>
-                    <h1>Prism</h1>
+                    <h1>Le Mag</h1>
                     <p>Templates magazine — importez une page d'accueil complète en 1 clic</p>
                 </div>
             </div>

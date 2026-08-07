@@ -1,15 +1,15 @@
 <?php
 /**
- * Plugin Name: Prism Blocks
- * Description: Blocs dynamiques pour le thème Prism — Hero, Grille, Cartes.
- * Version: 1.1.1
+ * Plugin Name: Le Mag Blocks
+ * Description: Blocs dynamiques pour le thème Le Mag — Hero, Grille, Cartes.
+ * Version: 1.1.2
  * Author: Pressly
  * Text Domain: prism-blocks
  */
 
 defined('ABSPATH') || exit;
 
-define('PRISM_BLOCKS_VERSION', '1.1.1');
+define('PRISM_BLOCKS_VERSION', '1.1.2');
 
 add_action('init', function () {
 
@@ -260,7 +260,7 @@ add_action('enqueue_block_editor_assets', function () {
 
 // Catégorie de blocs
 add_filter('block_categories_all', function ($cats) {
-    return array_merge([['slug' => 'prism', 'title' => 'Prism']], $cats);
+    return array_merge([['slug' => 'prism', 'title' => 'Le Mag']], $cats);
 });
 
 // Site Kits (import 1 clic)

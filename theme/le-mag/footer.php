@@ -29,7 +29,7 @@
   </div>
   <div class="footer-bar">
     <span>&copy; <?php echo esc_html(gmdate('Y')); ?> <?php bloginfo('name'); ?></span>
-    <span><?php echo esc_html(apply_filters('prism_copyright', 'WordPress + Prism')); ?></span>
+    <span><?php echo esc_html(apply_filters('prism_copyright', 'WordPress + Le Mag')); ?></span>
   </div>
 </footer>
 
