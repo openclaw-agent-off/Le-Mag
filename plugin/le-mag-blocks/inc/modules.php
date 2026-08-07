@@ -27,16 +27,16 @@ function prism_modules(): array {
 
 function prism_module_catalog(): array {
     return [
-        'background' => ['name' => __('Arrière-plan', 'prism-blocks'), 'description' => __('Définissez les couleurs et images d’arrière-plan du site.', 'prism-blocks')],
-        'blog' => ['name' => __('Blog', 'prism-blocks'), 'description' => __('Activez la mise en page masonry et le chargement continu.', 'prism-blocks')],
-        'copyright' => ['name' => __('Copyright', 'prism-blocks'), 'description' => __('Définissez un message personnalisé dans le pied de page.', 'prism-blocks')],
-        'elements' => ['name' => __('Éléments', 'prism-blocks'), 'description' => __('Masquez certains éléments du thème selon vos besoins.', 'prism-blocks')],
-        'font-library' => ['name' => __('Font Library', 'prism-blocks'), 'description' => __('Choisissez et chargez les polices Google du site.', 'prism-blocks')],
-        'menu-plus' => ['name' => __('Menu Plus', 'prism-blocks'), 'description' => __('Header mobile, navigation sticky et panneau latéral.', 'prism-blocks')],
-        'secondary-nav' => ['name' => __('Secondary Nav', 'prism-blocks'), 'description' => __('Ajoutez un second menu de navigation.', 'prism-blocks')],
-        'site-library' => ['name' => __('Bibliothèque de Sites', 'prism-blocks'), 'description' => __('Importez les kits Le Mag prêts à l’emploi.', 'prism-blocks')],
-        'spacing' => ['name' => __('Espacement', 'prism-blocks'), 'description' => __('Réglez la largeur et les espacements globaux.', 'prism-blocks')],
-        'woocommerce' => ['name' => __('WooCommerce', 'prism-blocks'), 'description' => __('Ajoutez les réglages de base pour votre boutique.', 'prism-blocks')],
+        'background' => ['name' => __('Arrière-plan', 'prism-blocks'), 'description' => __('Modifiez la couleur et l’image d’arrière-plan du site.', 'prism-blocks')],
+        'blog' => ['name' => __('Blog', 'prism-blocks'), 'description' => __('Activez une mise en page masonry pour les grilles d’articles.', 'prism-blocks')],
+        'copyright' => ['name' => __('Copyright', 'prism-blocks'), 'description' => __('Remplacez le texte affiché dans la barre inférieure du pied de page.', 'prism-blocks')],
+        'elements' => ['name' => __('Éléments', 'prism-blocks'), 'description' => __('Masquez la sidebar ou le pied de page sur l’ensemble du site.', 'prism-blocks')],
+        'font-library' => ['name' => __('Font Library', 'prism-blocks'), 'description' => __('Choisissez les familles de polices utilisées par le texte et les titres.', 'prism-blocks')],
+        'menu-plus' => ['name' => __('Menu Plus', 'prism-blocks'), 'description' => __('Gérez le comportement sticky du header. Le menu off-canvas mobile n’est pas disponible.', 'prism-blocks')],
+        'secondary-nav' => ['name' => __('Secondary Nav', 'prism-blocks'), 'description' => __('Activez un emplacement de navigation secondaire dans le header.', 'prism-blocks')],
+        'site-library' => ['name' => __('Bibliothèque de Sites', 'prism-blocks'), 'description' => __('Créez une page d’accueil à partir d’un kit Le Mag prédéfini.', 'prism-blocks')],
+        'spacing' => ['name' => __('Espacement', 'prism-blocks'), 'description' => __('Définissez la largeur maximale et l’espacement des conteneurs compatibles.', 'prism-blocks')],
+        'woocommerce' => ['name' => __('WooCommerce', 'prism-blocks'), 'description' => __('Détectez WooCommerce et affichez son état de compatibilité avec Le Mag.', 'prism-blocks')],
     ];
 }
 

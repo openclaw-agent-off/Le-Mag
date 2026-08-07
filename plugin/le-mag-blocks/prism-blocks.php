@@ -2,14 +2,14 @@
 /**
  * Plugin Name: Le Mag Blocks
  * Description: Blocs dynamiques pour le thème Le Mag — Hero, Grille, Cartes.
- * Version: 1.1.2
+ * Version: 1.1.3
  * Author: Pressly
  * Text Domain: prism-blocks
  */
 
 defined('ABSPATH') || exit;
 
-define('PRISM_BLOCKS_VERSION', '1.1.2');
+define('PRISM_BLOCKS_VERSION', '1.1.3');
 
 add_action('init', function () {
 
