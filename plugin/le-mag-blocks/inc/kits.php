@@ -4,17 +4,6 @@
  */
 defined('ABSPATH') || exit;
 
-add_action('admin_menu', function () {
-    add_submenu_page(
-        'lemag-dashboard',
-        __('Kits', 'prism-blocks'),
-        __('Kits', 'prism-blocks'),
-        'manage_options',
-        'prism-kits',
-        'prism_kits_page'
-    );
-});
-
 function prism_kits_page() {
     $kits = prism_get_kits();
     ?>
@@ -100,7 +89,7 @@ function prism_kits_page() {
             var btn = $(this), kit = btn.data('kit');
             btn.prop('disabled',true).html('<span style="display:inline-block;animation:spin .6s linear infinite">⟳</span> Import...');
             $.post(ajaxurl, {action:'prism_import_kit',kit:kit,nonce:'<?php echo wp_create_nonce("prism-kits"); ?>'}, function(r){
-                if(r.success){ window.location = '?page=prism-kits&imported=1'; }
+                if(r.success){ window.location = '?page=lemag-dashboard&tab=kits&imported=1'; }
                 else { alert('Erreur : '+r.data); btn.prop('disabled',false).html('Réessayer'); }
             });
         });

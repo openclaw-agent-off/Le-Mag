@@ -42,22 +42,52 @@ function prism_module_catalog(): array {
 
 add_action('admin_menu', function (): void {
     add_menu_page('Le Mag', 'Le Mag', 'manage_options', 'lemag-dashboard', 'lemag_dashboard_page', 'dashicons-admin-customizer', 30);
-    add_submenu_page('lemag-dashboard', __('Tableau de bord', 'prism-blocks'), __('Tableau de bord', 'prism-blocks'), 'manage_options', 'lemag-dashboard', 'lemag_dashboard_page');
-    add_submenu_page('lemag-dashboard', __('Modules', 'prism-blocks'), __('Modules', 'prism-blocks'), 'manage_options', 'prism-modules', 'prism_modules_page');
 });
+
+add_action('admin_menu', function (): void {
+    remove_submenu_page('lemag-dashboard', 'lemag-dashboard');
+}, 99);
+
+function lemag_admin_tabs(string $active, array $tabs, string $base_url): void {
+    echo '<nav class="nav-tab-wrapper lemag-admin-tabs">';
+    foreach ($tabs as $slug => $label) {
+        $class = $active === $slug ? ' nav-tab-active' : '';
+        echo '<a class="nav-tab' . esc_attr($class) . '" href="' . esc_url($base_url . '&tab=' . $slug) . '">' . esc_html($label) . '</a>';
+    }
+    echo '</nav><style>.lemag-admin-tabs{margin:22px 0 24px}.lemag-admin-tabs .nav-tab-active{border-bottom-color:#fff;background:#fff}</style>';
+}
 
 function lemag_dashboard_page(): void {
     if (!current_user_can('manage_options')) return;
+    $tab = sanitize_key($_GET['tab'] ?? 'dashboard');
+    $tabs = ['dashboard' => __('Tableau de bord', 'prism-blocks'), 'modules' => __('Modules', 'prism-blocks'), 'kits' => __('Kits', 'prism-blocks'), 'customize' => __('Personnaliser', 'prism-blocks')];
+    if (!isset($tabs[$tab])) $tab = 'dashboard';
+    $base_url = admin_url('admin.php?page=lemag-dashboard');
+    if ($tab === 'modules') {
+        lemag_admin_tabs($tab, $tabs, $base_url);
+        prism_modules_page();
+        return;
+    }
+    if ($tab === 'kits' && function_exists('prism_kits_page')) {
+        lemag_admin_tabs($tab, $tabs, $base_url);
+        prism_kits_page();
+        return;
+    }
+    if ($tab === 'customize') {
+        wp_safe_redirect(admin_url('customize.php'));
+        exit;
+    }
     $modules = prism_modules();
     $active = count(array_filter($modules, static function (array $module): bool { return !empty($module['active']); }));
     ?>
     <div class="wrap lemag-dashboard">
       <h1>Le Mag</h1>
-      <p class="description">Bienvenue dans le tableau de bord de votre thème magazine.</p>
+      <p class="description">Pilotez votre thème, ses modules, ses kits et sa personnalisation depuis cette interface.</p>
+      <?php lemag_admin_tabs($tab, $tabs, $base_url); ?>
       <div class="lemag-dashboard-grid">
         <div class="lemag-dashboard-card"><span class="dashicons dashicons-admin-appearance"></span><h2>Personnaliser le site</h2><p>Modifiez le logo, les couleurs, la typographie et les options générales.</p><a class="button button-primary" href="<?php echo esc_url(admin_url('customize.php')); ?>">Ouvrir le personnalisateur</a></div>
-        <div class="lemag-dashboard-card"><span class="dashicons dashicons-admin-plugins"></span><h2>Modules</h2><p><?php echo esc_html($active); ?> module(s) actif(s). Activez uniquement les fonctions utiles à votre site.</p><a class="button" href="<?php echo esc_url(admin_url('admin.php?page=prism-modules')); ?>">Gérer les modules</a></div>
-        <div class="lemag-dashboard-card"><span class="dashicons dashicons-layout"></span><h2>Kits de site</h2><p>Importez une mise en page magazine complète en quelques clics.</p><a class="button" href="<?php echo esc_url(admin_url('admin.php?page=prism-kits')); ?>">Ouvrir les kits</a></div>
+        <div class="lemag-dashboard-card"><span class="dashicons dashicons-admin-plugins"></span><h2>Modules</h2><p><?php echo esc_html($active); ?> module(s) actif(s). Activez uniquement les fonctions utiles à votre site.</p><a class="button" href="<?php echo esc_url($base_url . '&tab=modules'); ?>">Gérer les modules</a></div>
+        <div class="lemag-dashboard-card"><span class="dashicons dashicons-layout"></span><h2>Kits de site</h2><p>Créez une page d’accueil à partir d’un kit Le Mag prédéfini.</p><a class="button" href="<?php echo esc_url($base_url . '&tab=kits'); ?>">Ouvrir les kits</a></div>
       </div>
       <style>
       .lemag-dashboard{max-width:1100px}.lemag-dashboard-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-top:28px}.lemag-dashboard-card{background:#fff;border:1px solid #dcdcde;border-radius:10px;padding:24px;box-shadow:0 1px 2px #0000000d}.lemag-dashboard-card .dashicons{color:#e2003a;font-size:30px;width:30px;height:30px}.lemag-dashboard-card h2{font-size:18px;margin:18px 0 8px}.lemag-dashboard-card p{min-height:48px;color:#646970;line-height:1.5}
@@ -91,7 +121,7 @@ add_action('admin_init', function (): void {
         }
     }
     update_option('prism_modules', $clean);
-    wp_safe_redirect(add_query_arg(['page' => 'prism-modules', 'updated' => 1], admin_url('admin.php')));
+    wp_safe_redirect(add_query_arg(['page' => 'lemag-dashboard', 'tab' => 'modules', 'updated' => 1], admin_url('admin.php')));
     exit;
 });
 
@@ -133,7 +163,7 @@ function prism_modules_page(): void {
             <?php elseif ($slug === 'secondary-nav'): ?>
               <p>Créez un menu dans <a href="<?php echo esc_url(admin_url('nav-menus.php')); ?>">Apparence → Menus</a>, puis assignez-le à l’emplacement Secondary Nav.</p>
             <?php elseif ($slug === 'site-library'): ?>
-              <p>Les kits sont disponibles dans <a href="<?php echo esc_url(admin_url('admin.php?page=prism-kits')); ?>">Le Mag → Kits</a>.</p>
+              <p>Les kits sont disponibles dans <a href="<?php echo esc_url(admin_url('admin.php?page=lemag-dashboard&tab=kits')); ?>">Le Mag → Kits</a>.</p>
             <?php elseif ($slug === 'spacing'): ?>
               <label>Largeur contenu <input type="text" name="prism[spacing][content]" value="<?php echo esc_attr($data['content']); ?>"></label>
               <label>Espacement <input type="text" name="prism[spacing][gap]" value="<?php echo esc_attr($data['gap']); ?>"></label>
