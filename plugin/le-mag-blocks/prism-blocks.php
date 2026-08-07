@@ -2,14 +2,14 @@
 /**
  * Plugin Name: Prism Blocks
  * Description: Blocs dynamiques pour le thème Prism — Hero, Grille, Cartes.
- * Version: 1.1.0
+ * Version: 1.1.1
  * Author: Pressly
  * Text Domain: prism-blocks
  */
 
 defined('ABSPATH') || exit;
 
-define('PRISM_BLOCKS_VERSION', '1.1.0');
+define('PRISM_BLOCKS_VERSION', '1.1.1');
 
 add_action('init', function () {
 
@@ -242,10 +242,8 @@ add_action('init', function () {
 
 });
 
-// CSS front-end
-add_action('wp_enqueue_scripts', function () {
-    wp_enqueue_style('prism-blocks', plugin_dir_url(__FILE__) . 'blocks.css', [], PRISM_BLOCKS_VERSION);
-});
+// Block CSS is merged into the classic theme stylesheet. Do not enqueue
+// blocks.css on the front end a second time: duplicate rules break layouts.
 
 // JS editor
 add_action('enqueue_block_editor_assets', function () {
