@@ -7,7 +7,7 @@
  */
 defined('ABSPATH') || exit;
 
-define('PRISM_VERSION', '1.3.0');
+define('PRISM_VERSION', '1.3.6');
 
 // CSS + Fonts + Menu JS
 add_action('wp_enqueue_scripts', function (): void {
