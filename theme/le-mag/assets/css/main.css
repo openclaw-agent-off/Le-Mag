@@ -36,8 +36,8 @@ a{color:var(--red);text-decoration:none}
 .main-nav-list .sub-menu a:hover{background:var(--gray-light);color:var(--red);border-bottom-color:transparent}
 /* Mega menu — Alecaddd-style */
 .main-nav-list .mega-menu{position:relative}
-.main-nav-list .mega-menu>.sub-menu{position:absolute;top:100%;left:0;background:#fff;border-radius:0 0 12px 12px;box-shadow:0 16px 48px rgba(0,0,0,.12);padding:20px 24px;z-index:9999;border-top:2px solid var(--red);display:none;display:flex;gap:28px;width:max-content}
-.main-nav-list .mega-menu:hover>.sub-menu,.main-nav-list .mega-menu.is-open>.sub-menu{display:flex}
+.main-nav-list .mega-menu>.sub-menu{display:none;position:absolute;top:100%;left:0;background:#fff;border-radius:0 0 12px 12px;box-shadow:0 16px 48px rgba(0,0,0,.12);padding:20px 24px;z-index:9999;border-top:2px solid var(--red);gap:28px;width:max-content}
+.main-nav-list .mega-menu:hover>.sub-menu{display:flex}
 .secondary-nav{border-top:1px solid var(--border);background:var(--gray-light)}
 .secondary-nav-list{max-width:var(--w);margin:0 auto;padding:0 24px;display:flex;gap:18px;list-style:none;min-height:34px;align-items:center}
 .secondary-nav-list a{font-size:.72rem;color:var(--gray);text-decoration:none}
