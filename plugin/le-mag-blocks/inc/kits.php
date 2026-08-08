@@ -168,5 +168,30 @@ function prism_get_kits(): array {
 <!-- wp:prism/post-grid {"postsPerPage":6,"columns":3,"offset":1} /-->
 ',
         ],
+        'magazine-2' => [
+            'name'        => 'Magazine 2',
+            'description' => 'Multi-sections : headline, global, travel, most popular, + grilles.',
+            'color'       => '#1A1A2E',
+            'preview'     => 'https://l-investissement-locatif.fr/theme-preview.html',
+            'content'     => '
+<!-- wp:prism/magazine-headline /-->
+
+<!-- wp:prism/featured-posts {"title":"Global info","postsPerPage":4} /-->
+
+<!-- wp:prism/category-section {"title":"Travel Tips","postsPerPage":3,"accentColor":"#E2003A"} /-->
+
+<!-- wp:prism/post-grid {"postsPerPage":3,"columns":3} /-->
+
+<!-- wp:prism/featured-posts {"title":"Most Popular","postsPerPage":5} /-->
+
+<!-- wp:prism/category-section {"title":"Health","postsPerPage":4,"accentColor":"#059669"} /-->
+
+<!-- wp:heading {"level":2,"className":"section-title"} -->
+<h2 class="wp-block-heading section-title">Derniers articles</h2>
+<!-- /wp:heading -->
+
+<!-- wp:prism/post-grid {"postsPerPage":6,"columns":3,"offset":1} /-->
+',
+        ],
     ];
 }
