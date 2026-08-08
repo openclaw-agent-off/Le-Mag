@@ -307,8 +307,8 @@ a{color:var(--red);text-decoration:none}
 .prism-mh-item-content h3{font-size:.9rem}
 }
 
-/* Mega Menu Panel */
-.mega-menu-panel{position:absolute;top:100%;left:50%;transform:translateX(-50%);background:var(--white,#fff);box-shadow:0 20px 60px rgba(0,0,0,.12);padding:32px;z-index:1000;min-width:720px;opacity:0;visibility:hidden;transition:opacity .15s,visibility .15s;border-radius:0 0 12px 12px}
-.menu-item.mega-menu{position:relative}
-.menu-item.mega-menu:hover>.mega-menu-panel{opacity:1;visibility:visible}
-@media(max-width:768px){.mega-menu-panel{position:static;transform:none;min-width:0;box-shadow:none;padding:16px}}
+/* Mega Menu Panel — CPT content */
+.main-nav-list .mega-menu>.mega-menu-panel{display:none;position:absolute;top:100%;left:0;background:var(--white,#fff);border-radius:0 0 12px 12px;box-shadow:0 16px 48px rgba(0,0,0,.12);padding:24px 28px;z-index:9998;min-width:720px;max-width:90vw;border-top:2px solid var(--red,#E2003A)}
+.main-nav-list .mega-menu:hover>.mega-menu-panel{display:block}
+.main-nav-list .mega-menu>.mega-menu-panel *{max-width:100%}
+@media(max-width:768px){.main-nav-list .mega-menu>.mega-menu-panel{position:static;min-width:0;max-width:100%;box-shadow:none;padding:16px}}
