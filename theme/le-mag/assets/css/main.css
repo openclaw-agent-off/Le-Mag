@@ -68,7 +68,7 @@ a{color:var(--red);text-decoration:none}
 .main-nav-list a{padding:14px 0;font-size:1.1rem;border-bottom:1px solid var(--border);height:auto}
 .main-nav .sub-menu{display:none;position:static;box-shadow:none;padding:0 0 0 16px;border:none;border-radius:0;min-width:0}
 .main-nav .menu-item-has-children>a::after{content:'▾';float:right}
-.mega-menu-panel{display:none!important}
+.mega-menu-panel{display:none}
 .mega-col{min-width:0}
 .mega-col>ul{display:none}
 }
@@ -328,10 +328,12 @@ a{color:var(--red);text-decoration:none}
 .prism-mh-item-content h3{font-size:.9rem}
 }
 
-/* Mega Menu Panel — CPT content */
+/* Mega Menu Panel — desktop only */
+@media(min-width:769px){
 .main-nav-list .mega-menu>.mega-menu-panel{display:none;position:absolute;top:100%;left:0;background:var(--white,#fff);border-radius:0 0 12px 12px;box-shadow:0 16px 48px rgba(0,0,0,.12);padding:24px 28px;z-index:9998;min-width:720px;max-width:90vw;border-top:2px solid var(--red,#E2003A)}
 .main-nav-list .mega-menu:hover>.mega-menu-panel{display:block}
 .main-nav-list .mega-menu>.mega-menu-panel *{max-width:100%}
+}
 
 /* Mega Posts Grid */
 .mega-posts-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:16px}
