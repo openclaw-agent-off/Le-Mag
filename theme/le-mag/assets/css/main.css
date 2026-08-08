@@ -180,21 +180,16 @@ a{color:var(--red);text-decoration:none}
 .form-submit input[type=submit]:hover{background:#c4002d;transform:translateY(-2px);box-shadow:rgba(226,0,58,.35) 0px 8px 20px -8px}
 .form-submit input[type=submit]:active{transform:translateY(0);box-shadow:rgba(226,0,58,.15) 0px 2px 6px -3px}
 
-/* Related Posts */
-.related-posts{margin:48px 0 0;padding:36px 0 0;border-top:1px solid rgba(0,0,0,.08)}
-.related-title{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:rgba(0,0,0,.85);margin:0 0 20px;letter-spacing:-.01em}
-.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.related-card{display:flex;flex-direction:column;gap:10px}
-.related-thumb{display:block;overflow:hidden;border-radius:8px}
-.related-thumb img{width:100%;height:auto;display:block;transition:transform .3s}
-.related-thumb:hover img{transform:scale(1.04)}
-.related-body{display:flex;flex-direction:column;gap:4px}
-.related-cat a{font-size:.7rem;font-weight:700;color:var(--red,#E2003A);text-transform:uppercase;letter-spacing:.04em;text-decoration:none}
-.related-body h4{font-size:.92rem;font-weight:700;line-height:1.35;margin:0}
-.related-body h4 a{color:rgba(0,0,0,.85);text-decoration:none}
-.related-body h4 a:hover{color:var(--red,#E2003A)}
-.related-date{font-size:.73rem;color:rgba(0,0,0,.45);letter-spacing:.01em}
-@media(max-width:767px){.related-grid{grid-template-columns:1fr}}
+/* Post Navigation — prev/next */
+.post-nav{display:grid;grid-template-columns:1fr 1fr;gap:1px;margin:48px 0 0;border-radius:12px;overflow:hidden;box-shadow:0 0 0 1px rgba(0,0,0,.08)}
+.post-nav-link{display:flex;flex-direction:column;gap:4px;padding:28px 32px;background:#fafafa;text-decoration:none;transition:background .2s}
+.post-nav-link:hover{background:#f5f5f5}
+.post-nav-label{font-size:.7rem;font-weight:500;color:rgba(0,0,0,.4);text-transform:uppercase;letter-spacing:.06em}
+.post-nav-title{font-size:.95rem;font-weight:600;color:#171717;line-height:1.35}
+.post-nav-prev{text-align:left}
+.post-nav-next{text-align:right}
+.post-nav-empty{display:none}
+@media(max-width:767px){.post-nav{grid-template-columns:1fr}.post-nav-next{text-align:left}}
 
 /* WordPress core */
 .wp-caption{max-width:100%;margin-bottom:20px}
