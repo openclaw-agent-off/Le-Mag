@@ -2,14 +2,14 @@
 /**
  * Plugin Name: Le Mag Blocks
  * Description: Blocs dynamiques pour le thème Le Mag — Hero, Grille, Cartes.
- * Version: 1.2.0
+ * Version: 1.3.0
  * Author: Pressly
  * Text Domain: prism-blocks
  */
 
 defined('ABSPATH') || exit;
 
-define('PRISM_BLOCKS_VERSION', '1.2.0');
+define('PRISM_BLOCKS_VERSION', '1.3.0');
 
 add_action('init', function () {
 
@@ -240,6 +240,41 @@ add_action('init', function () {
         ],
     ]);
 
+    // === MAGAZINE HEADLINE ===
+    register_block_type('prism/magazine-headline', [
+        'render_callback' => function () {
+            $hero = new WP_Query(['posts_per_page' => 1]);
+            if (!$hero->have_posts()) return '';
+            ob_start(); ?>
+            <div class="prism-magazine-headline">
+                <div class="prism-mh-hero">
+                    <?php $hero->the_post(); $img = get_the_post_thumbnail_url(null, 'medium_large') ?: ''; $cats = get_the_category_list(' '); ?>
+                    <div class="prism-mh-hero-bg" style="background-image:url(<?php echo esc_url($img); ?>)"></div>
+                    <div class="prism-mh-hero-overlay"></div>
+                    <div class="prism-mh-hero-content">
+                        <span class="prism-mh-cat"><?php echo wp_kses_post($cats); ?></span>
+                        <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+                        <div class="prism-mh-meta"><span><?php echo get_the_date(); ?></span><span><?php echo esc_html__('par', 'prism-blocks') . ' ' . get_the_author(); ?></span></div>
+                    </div>
+                </div>
+                <div class="prism-mh-grid">
+                    <?php wp_reset_postdata(); $grid = new WP_Query(['posts_per_page' => 4, 'offset' => 1]); $i = 0;
+                    while ($grid->have_posts()): $grid->the_post(); $i++; $img = get_the_post_thumbnail_url(null, 'medium') ?: ''; $cats = get_the_category_list(' '); ?>
+                        <div class="prism-mh-item">
+                            <div class="prism-mh-item-bg" style="background-image:url(<?php echo esc_url($img); ?>)"></div>
+                            <div class="prism-mh-item-overlay"></div>
+                            <div class="prism-mh-item-content">
+                                <span class="prism-mh-cat"><?php echo wp_kses_post($cats); ?></span>
+                                <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+                            </div>
+                        </div>
+                    <?php endwhile; wp_reset_postdata(); ?>
+                </div>
+            </div>
+            <?php return ob_get_clean();
+        },
+    ]);
+
 });
 
 // Block CSS is merged into the classic theme stylesheet. Do not enqueue
@@ -263,6 +298,7 @@ add_filter('block_categories_all', function ($cats) {
     return array_merge([['slug' => 'prism', 'title' => 'Le Mag']], $cats);
 });
 
-// Site Kits (import 1 clic)
+// Site Kits (import 1 clic) + Modules + Mega Menu
 require_once plugin_dir_path(__FILE__) . 'inc/kits.php';
 require_once plugin_dir_path(__FILE__) . 'inc/modules.php';
+require_once plugin_dir_path(__FILE__) . 'inc/mega-menu-admin.php';

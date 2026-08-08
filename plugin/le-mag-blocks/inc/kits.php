@@ -127,17 +127,20 @@ function prism_get_kits(): array {
     return [
         'magazine' => [
             'name'        => 'Magazine',
-            'description' => 'Hero + catégories + grille. Layout classique pour site d\'actu et média.',
+            'description' => 'Headline magazine: 1 article hero + 4 articles en grille.',
             'color'       => '#E2003A',
             'preview'     => 'https://l-investissement-locatif.fr/theme-preview.html',
             'content'     => '
-<!-- wp:prism/post-hero {"postsPerPage":1} /-->
-<!-- wp:prism/featured-posts {"title":"À la une","postsPerPage":5} /-->
+<!-- wp:prism/magazine-headline /-->
+
 <!-- wp:prism/category-section {"title":"VILLE","category":18,"postsPerPage":4,"accentColor":"#2563EB"} /-->
+
 <!-- wp:prism/category-section {"title":"Fiscalité","category":15,"postsPerPage":4,"accentColor":"#059669"} /-->
+
 <!-- wp:heading {"level":2,"className":"section-title"} -->
 <h2 class="wp-block-heading section-title">Derniers articles</h2>
 <!-- /wp:heading -->
+
 <!-- wp:prism/post-grid {"postsPerPage":6,"columns":3,"offset":1} /-->
 ',
         ],

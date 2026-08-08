@@ -240,3 +240,38 @@ a{color:var(--red);text-decoration:none}
 .prism-featured-text h3 a:hover{color:var(--prism-red)}
 .prism-featured-text p{font-size:.85rem;color:var(--gray);margin:4px 0}
 @media(max-width:768px){.prism-featured-item{grid-template-columns:32px 100px 1fr;gap:12px;padding:16px 0}.prism-featured-number{font-size:1.3rem}.prism-featured-img img{width:100px;height:70px}}
+
+/* Magazine Headline */
+.prism-magazine-headline{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:48px}
+.prism-magazine-headline a{color:var(--white,#fff);text-decoration:none}
+.prism-mh-hero{position:relative;overflow:hidden;min-height:500px;display:flex}
+.prism-mh-hero-bg,.prism-mh-hero-overlay{position:absolute;top:0;left:0;width:100%;height:100%}
+.prism-mh-hero-bg{background-size:cover;background-position:center}
+.prism-mh-hero-overlay{background:linear-gradient(180deg,transparent 30%,rgba(0,0,0,.85))}
+.prism-mh-hero-content{position:relative;margin-top:auto;padding:24px;z-index:1;display:flex;flex-direction:column;gap:8px}
+.prism-mh-hero-content h2{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:900;margin:0;line-height:1.2}
+.prism-mh-hero-content h2 a:hover{text-decoration:underline}
+.prism-mh-meta{display:flex;gap:12px;font-size:.8rem;opacity:.85;text-transform:uppercase;letter-spacing:.04em}
+.prism-mh-cat{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;display:inline-flex;gap:.4em;flex-wrap:wrap}
+.prism-mh-cat a{background:var(--prism-red,#E2003A);padding:3px 10px;border-radius:4px;font-weight:600;font-size:.7rem;text-decoration:none}
+.prism-mh-grid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:10px}
+.prism-mh-item{position:relative;overflow:hidden;min-height:240px;display:flex}
+.prism-mh-item-bg,.prism-mh-item-overlay{position:absolute;top:0;left:0;width:100%;height:100%}
+.prism-mh-item-bg{background-size:cover;background-position:center}
+.prism-mh-item-overlay{background:linear-gradient(180deg,transparent 20%,rgba(0,0,0,.8))}
+.prism-mh-item-content{position:relative;display:flex;flex-direction:column;gap:6px;margin-top:auto;padding:20px;z-index:1}
+.prism-mh-item-content h3{font-size:1rem;font-weight:700;margin:0;line-height:1.3}
+.prism-mh-item-content h3 a:hover{text-decoration:underline}
+@media(max-width:767px){
+.prism-magazine-headline{grid-template-columns:1fr}
+.prism-mh-hero{min-height:320px}
+.prism-mh-hero-content h2{font-size:1.3rem}
+.prism-mh-item{min-height:160px}
+.prism-mh-item-content h3{font-size:.9rem}
+}
+
+/* Mega Menu Panel */
+.mega-menu-panel{position:absolute;top:100%;left:50%;transform:translateX(-50%);background:var(--white,#fff);box-shadow:0 20px 60px rgba(0,0,0,.12);padding:32px;z-index:1000;min-width:720px;opacity:0;visibility:hidden;transition:opacity .15s,visibility .15s;border-radius:0 0 12px 12px}
+.menu-item.mega-menu{position:relative}
+.menu-item.mega-menu:hover>.mega-menu-panel{opacity:1;visibility:visible}
+@media(max-width:768px){.mega-menu-panel{position:static;transform:none;min-width:0;box-shadow:none;padding:16px}}
