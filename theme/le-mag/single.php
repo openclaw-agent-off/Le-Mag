@@ -21,6 +21,37 @@
       <div class="entry-tags"><?php the_tags('', ' ', ''); ?></div>
 
       <?php
+      // Articles similaires (même catégorie)
+      $cats = wp_get_post_categories(get_the_ID(), ['fields' => 'ids']);
+      if ($cats):
+        $related = new WP_Query([
+          'category__in'   => $cats,
+          'post__not_in'   => [get_the_ID()],
+          'posts_per_page' => 3,
+          'ignore_sticky_posts' => 1,
+        ]);
+        if ($related->have_posts()): ?>
+          <div class="related-posts">
+            <h3 class="related-title"><?php esc_html_e('Articles similaires', 'prism'); ?></h3>
+            <div class="related-grid">
+              <?php while ($related->have_posts()): $related->the_post(); ?>
+                <article class="related-card">
+                  <?php if (has_post_thumbnail()): ?>
+                    <a href="<?php the_permalink(); ?>" class="related-thumb"><?php the_post_thumbnail('medium'); ?></a>
+                  <?php endif; ?>
+                  <div class="related-body">
+                    <span class="related-cat"><?php the_category(', '); ?></span>
+                    <h4><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h4>
+                    <span class="related-date"><?php echo get_the_date(); ?></span>
+                  </div>
+                </article>
+              <?php endwhile; wp_reset_postdata(); ?>
+            </div>
+          </div>
+        <?php endif;
+      endif; ?>
+
+      <?php
       if (comments_open() || get_comments_number()):
         comments_template();
       endif;
