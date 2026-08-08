@@ -70,7 +70,7 @@ a{color:var(--red);text-decoration:none}
 .main-nav .menu-item-has-children>a::after{content:'▾';float:right}
 .mega-menu-panel{display:none!important}
 .mega-col{min-width:0}
-.mega-col>ul{display:block!important}
+.mega-col>ul{display:none}
 }
 
 /* Hero */
