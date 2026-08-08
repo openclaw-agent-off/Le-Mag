@@ -20,6 +20,8 @@ a{color:var(--red);text-decoration:none}
 
 /* Header */
 .site-header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.reading-progress{position:absolute;bottom:0;left:0;width:100%;height:3px;background:transparent;z-index:101}
+.reading-progress-bar{height:100%;width:0;background:var(--red,#E2003A);transition:width .15s linear;border-radius:0 2px 0 0}
 .header-inner{max-width:var(--w);margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between}
 .site-logo{display:flex;align-items:center;gap:10px}
 .site-logo img{width:32px;height:32px;border-radius:6px}

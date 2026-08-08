@@ -9,6 +9,7 @@
 <?php wp_body_open(); ?>
 
 <header class="site-header">
+  <div class="reading-progress"><div class="reading-progress-bar"></div></div>
   <div class="header-inner">
     <div class="site-logo">
       <?php if (has_custom_logo()): ?>
