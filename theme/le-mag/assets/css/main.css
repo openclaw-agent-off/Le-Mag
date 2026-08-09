@@ -97,8 +97,8 @@ a{color:var(--red);text-decoration:none}
 .card-footer{font-size:.72rem;color:var(--gray);text-transform:uppercase;letter-spacing:.05em}
 
 /* Section title */
-.section-title{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;position:relative;padding-bottom:8px;margin-bottom:24px}
-.section-title::after{content:'';display:block;width:30px;height:3px;background:var(--red);margin-top:8px}
+.section-title{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;text-align:center;position:relative;padding-bottom:8px;margin-bottom:24px}
+.section-title::after{content:'';display:block;width:30px;height:3px;background:var(--red);margin:8px auto 0}
 
 /* Article */
 .article-layout{display:grid;grid-template-columns:1fr 320px;gap:48px;align-items:start;max-width:var(--w);margin:40px auto;padding:0 24px}
