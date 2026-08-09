@@ -24,7 +24,7 @@ add_action('init', function (): void {
         'description'  => __('Contenu affiché dans les menus déroulants mega.', 'prism-blocks'),
         'public'       => false,
         'show_ui'      => true,
-        'show_in_menu' => 'lemag-dashboard',
+        'show_in_menu' => true,
         'menu_position'=> 31,
         'hierarchical' => true,
         'supports'     => ['title', 'editor', 'thumbnail'],
