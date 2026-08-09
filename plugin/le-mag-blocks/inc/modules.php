@@ -85,9 +85,42 @@ function lemag_dashboard_page(): void {
       <p class="description">Pilotez votre thème, ses modules, ses kits et sa personnalisation depuis cette interface.</p>
       <?php lemag_admin_tabs($tab, $tabs, $base_url); ?>
       <div class="lemag-dashboard-grid">
-        <div class="lemag-dashboard-card"><span class="dashicons dashicons-admin-appearance"></span><h2>Personnaliser le site</h2><p>Modifiez le logo, les couleurs, la typographie et les options générales.</p><a class="button button-primary" href="<?php echo esc_url(admin_url('customize.php')); ?>">Ouvrir le personnalisateur</a></div>
-        <div class="lemag-dashboard-card"><span class="dashicons dashicons-admin-plugins"></span><h2>Modules</h2><p><?php echo esc_html($active); ?> module(s) actif(s). Activez uniquement les fonctions utiles à votre site.</p><a class="button" href="<?php echo esc_url($base_url . '&tab=modules'); ?>">Gérer les modules</a></div>
-        <div class="lemag-dashboard-card"><span class="dashicons dashicons-layout"></span><h2>Kits de site</h2><p>Créez une page d’accueil à partir d’un kit Le Mag prédéfini.</p><a class="button" href="<?php echo esc_url($base_url . '&tab=kits'); ?>">Ouvrir les kits</a></div>
+        <div class="lemag-dashboard-card">
+          <span class="dashicons dashicons-admin-appearance"></span>
+          <h2>Personnaliser le site</h2>
+          <p>Modifiez le logo, les couleurs, la typographie et les options générales.</p>
+          <a class="button button-primary" href="<?php echo esc_url(admin_url('customize.php')); ?>">Ouvrir le personnalisateur</a>
+        </div>
+        <div class="lemag-dashboard-card">
+          <span class="dashicons dashicons-admin-plugins"></span>
+          <h2>Modules</h2>
+          <p><?php echo esc_html($active); ?> module(s) actif(s). Activez uniquement les fonctions utiles à votre site.</p>
+          <a class="button" href="<?php echo esc_url($base_url . '&tab=modules'); ?>">Gérer les modules</a>
+        </div>
+        <div class="lemag-dashboard-card">
+          <span class="dashicons dashicons-layout"></span>
+          <h2>Kits de site</h2>
+          <p>Créez une page d’accueil à partir d’un kit Le Mag prédéfini.</p>
+          <a class="button" href="<?php echo esc_url($base_url . '&tab=kits'); ?>">Ouvrir les kits</a>
+        </div>
+        <div class="lemag-dashboard-card">
+          <span class="dashicons dashicons-menu-alt"></span>
+          <h2>Mega Menus</h2>
+          <p>Créez des menus enrichis avec articles et catégories.</p>
+          <a class="button" href="<?php echo esc_url(admin_url('edit.php?post_type=lemag_mega_menu')); ?>">Gérer les mega menus</a>
+        </div>
+        <div class="lemag-dashboard-card">
+          <span class="dashicons dashicons-welcome-write-blog"></span>
+          <h2>Articles</h2>
+          <p>Rédigez et gérez vos articles.</p>
+          <a class="button" href="<?php echo esc_url(admin_url('edit.php')); ?>">Voir les articles</a>
+        </div>
+        <div class="lemag-dashboard-card">
+          <span class="dashicons dashicons-category"></span>
+          <h2>Catégories</h2>
+          <p>Organisez votre contenu par rubriques.</p>
+          <a class="button" href="<?php echo esc_url(admin_url('edit-tags.php?taxonomy=category')); ?>">Gérer les catégories</a>
+        </div>
       </div>
       <style>
       .lemag-dashboard{max-width:1100px}.lemag-dashboard-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-top:28px}.lemag-dashboard-card{background:#fff;border:1px solid #dcdcde;border-radius:10px;padding:24px;box-shadow:0 1px 2px #0000000d}.lemag-dashboard-card .dashicons{color:#e2003a;font-size:30px;width:30px;height:30px}.lemag-dashboard-card h2{font-size:18px;margin:18px 0 8px}.lemag-dashboard-card p{min-height:48px;color:#646970;line-height:1.5}
