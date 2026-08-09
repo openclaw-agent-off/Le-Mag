@@ -1,7 +1,10 @@
 /* Le Mag — Classic Theme */
+/* Nexa Fonts */
+@font-face{font-family:'Nexa';src:url('../fonts/NexaLight.otf') format('opentype');font-weight:300;font-style:normal;font-display:swap}
+@font-face{font-family:'Nexa';src:url('../fonts/NexaBold.otf') format('opentype');font-weight:700;font-style:normal;font-display:swap}
 :root{--red:#E2003A;--black:#111;--white:#fff;--gray:#6B7280;--gray-light:#F3F4F6;--border:#E5E7EB;--r:12px;--w:1280px}
 *,*::before,*::after{box-sizing:border-box}
-body{margin:0;font-family:Inter,sans-serif;color:var(--black);background:var(--white);line-height:1.6;-webkit-font-smoothing:antialiased}
+body{margin:0;font-family:'Nexa',sans-serif;font-weight:300;color:var(--black);background:var(--white);line-height:1.6;-webkit-font-smoothing:antialiased}
 img{max-width:100%;height:auto;display:block}
 a{color:var(--red);text-decoration:none}
 
