@@ -311,7 +311,7 @@ add_action('enqueue_block_editor_assets', function () {
     wp_enqueue_script('prism-blocks-editor',
         plugin_dir_url(__FILE__) . 'build/blocks.js',
         ['wp-blocks', 'wp-element', 'wp-block-editor', 'wp-components'],
-        PRISM_BLOCKS_VERSION, true
+        filemtime(plugin_dir_path(__FILE__) . 'build/blocks.js'), true
     );
     wp_enqueue_style('prism-blocks-editor',
         plugin_dir_url(__FILE__) . 'blocks.css', [], PRISM_BLOCKS_VERSION
