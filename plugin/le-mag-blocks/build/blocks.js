@@ -151,4 +151,21 @@
     save: function() { return null; }
   });
 
+  // Popular List
+  wp.blocks.registerBlockType('prism/popular-list', {
+    apiVersion: 3,
+    title: 'Popular List', icon: 'list-view', category: 'prism',
+    attributes: { postsPerPage: { type: 'number', default: 9 } },
+    edit: function(props) {
+      var blockProps = useBlockProps();
+      return el('div', blockProps,
+        el(Inspector, {}, el(PanelBody, { title: 'Réglages' },
+          el(NumberControl, { label: 'Articles', value: props.attributes.postsPerPage, min: 1, onChange: function(v) { props.setAttributes({ postsPerPage: v }) } })
+        )),
+        el('div', { className: 'prism-block-preview' }, 'Popular List — ' + props.attributes.postsPerPage + ' articles numérotés')
+      );
+    },
+    save: function() { return null; }
+  });
+
 })(window.wp);

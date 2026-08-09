@@ -275,6 +275,32 @@ add_action('init', function () {
         },
     ]);
 
+    // === POPULAR LIST ===
+    register_block_type('prism/popular-list', [
+        'render_callback' => function ($attrs) {
+            $per_page = min(20, max(1, intval($attrs['postsPerPage'] ?? 9)));
+            $query = new WP_Query(['posts_per_page' => $per_page, 'ignore_sticky_posts' => 1]);
+            if (!$query->have_posts()) return '';
+            ob_start(); ?>
+            <ol class="prism-popular-list">
+                <?php $n = 1; while ($query->have_posts()): $query->the_post(); ?>
+                    <li class="prism-popular-item">
+                        <span class="prism-popular-num"><?php echo str_pad($n++, 2, '0', STR_PAD_LEFT); ?></span>
+                        <div class="prism-popular-body">
+                            <span class="prism-popular-cat"><?php the_category(', '); ?></span>
+                            <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+                            <span class="prism-popular-date"><?php echo get_the_date(); ?></span>
+                        </div>
+                    </li>
+                <?php endwhile; wp_reset_postdata(); ?>
+            </ol>
+            <?php return ob_get_clean();
+        },
+        'attributes' => [
+            'postsPerPage' => ['type' => 'number', 'default' => 9],
+        ],
+    ]);
+
 });
 
 // Block CSS is merged into the classic theme stylesheet. Do not enqueue

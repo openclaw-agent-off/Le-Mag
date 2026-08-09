@@ -351,3 +351,14 @@ a{color:var(--red);text-decoration:none}
 @media(max-width:768px){
 .mega-posts-grid{grid-template-columns:repeat(2,1fr)}
 }
+
+/* Popular List */
+.prism-popular-list{list-style:none;padding:0;margin:0;counter-reset:popular}
+.prism-popular-item{display:flex;align-items:center;gap:20px;padding:16px 0;border-bottom:1px solid rgba(0,0,0,.06);counter-increment:popular}
+.prism-popular-num{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;color:var(--red,#E2003A);opacity:.25;min-width:44px;text-align:center;flex-shrink:0}
+.prism-popular-body{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0}
+.prism-popular-cat a{font-size:.68rem;font-weight:700;color:var(--red,#E2003A);text-transform:uppercase;letter-spacing:.04em;text-decoration:none}
+.prism-popular-body h3{font-size:.9rem;font-weight:600;margin:0;line-height:1.3}
+.prism-popular-body h3 a{color:rgba(0,0,0,.85);text-decoration:none}
+.prism-popular-body h3 a:hover{color:var(--red,#E2003A)}
+.prism-popular-date{font-size:.7rem;color:rgba(0,0,0,.4);letter-spacing:.01em}
