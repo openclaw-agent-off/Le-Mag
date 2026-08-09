@@ -27,20 +27,22 @@
       if ($prev || $next): ?>
         <nav class="post-nav">
           <?php if ($prev): ?>
-            <a href="<?php echo get_permalink($prev); ?>" class="post-nav-link post-nav-prev">
-              <span class="post-nav-label"><?php esc_html_e('← Article précédent', 'prism'); ?></span>
-              <span class="post-nav-title"><?php echo get_the_title($prev); ?></span>
+            <a href="<?php echo get_permalink($prev); ?>" class="post-nav-link">
+              <span class="post-nav-arrow">←</span>
+              <span class="post-nav-body">
+                <span class="post-nav-label"><?php esc_html_e('Article précédent', 'prism'); ?></span>
+                <span class="post-nav-title"><?php echo get_the_title($prev); ?></span>
+              </span>
             </a>
-          <?php else: ?>
-            <span class="post-nav-link post-nav-empty"></span>
           <?php endif; ?>
           <?php if ($next): ?>
-            <a href="<?php echo get_permalink($next); ?>" class="post-nav-link post-nav-next">
-              <span class="post-nav-label"><?php esc_html_e('Article suivant →', 'prism'); ?></span>
-              <span class="post-nav-title"><?php echo get_the_title($next); ?></span>
+            <a href="<?php echo get_permalink($next); ?>" class="post-nav-link">
+              <span class="post-nav-arrow">→</span>
+              <span class="post-nav-body">
+                <span class="post-nav-label"><?php esc_html_e('Article suivant', 'prism'); ?></span>
+                <span class="post-nav-title"><?php echo get_the_title($next); ?></span>
+              </span>
             </a>
-          <?php else: ?>
-            <span class="post-nav-link post-nav-empty"></span>
           <?php endif; ?>
         </nav>
       <?php endif; ?>
