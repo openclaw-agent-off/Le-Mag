@@ -195,6 +195,8 @@ a{color:var(--red);text-decoration:none}
 .post-nav-body{display:flex;flex-direction:column;gap:3px;min-width:0}
 .post-nav-label{font-size:.68rem;font-weight:500;color:rgba(0,0,0,.4);text-transform:uppercase;letter-spacing:.06em}
 .post-nav-title{font-size:.9rem;font-weight:600;color:#171717;line-height:1.35;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.post-nav-next{text-align:right}
+.post-nav-next .post-nav-body{align-items:flex-end}
 .post-nav-empty{display:none}
 @media(max-width:767px){.post-nav{flex-direction:column}.post-nav-link{padding:14px 20px}.post-nav-title{white-space:normal}}
 

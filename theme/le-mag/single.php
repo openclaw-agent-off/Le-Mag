@@ -36,12 +36,12 @@
             </a>
           <?php endif; ?>
           <?php if ($next): ?>
-            <a href="<?php echo get_permalink($next); ?>" class="post-nav-link">
-              <span class="post-nav-arrow">→</span>
+            <a href="<?php echo get_permalink($next); ?>" class="post-nav-link post-nav-next">
               <span class="post-nav-body">
                 <span class="post-nav-label"><?php esc_html_e('Article suivant', 'prism'); ?></span>
                 <span class="post-nav-title"><?php echo get_the_title($next); ?></span>
               </span>
+              <span class="post-nav-arrow">→</span>
             </a>
           <?php endif; ?>
         </nav>
