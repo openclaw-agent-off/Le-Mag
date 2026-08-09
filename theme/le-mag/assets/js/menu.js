@@ -20,7 +20,7 @@ if(window.innerWidth<=768)nav.classList.remove("is-open");
 document.addEventListener('DOMContentLoaded',function(){
 var bar=document.querySelector('.reading-progress-bar');
 if(!bar)return;
-var article=document.querySelector('.article-content');
+var article=document.querySelector('.entry-content');
 var target=article||document.documentElement;
 function update(){
 var h=target.scrollHeight;
