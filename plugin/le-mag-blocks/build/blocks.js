@@ -4,43 +4,57 @@
   var useBlockProps = wp.blockEditor.useBlockProps;
   var PanelBody = wp.components.PanelBody;
   var TextControl = wp.components.TextControl;
-  var SelectControl = wp.components.SelectControl;
+  var ServerSideRender = wp.serverSideRender;
+  var Disabled = wp.components.Disabled;
+  var __ = wp.i18n.__;
 
   function NumberControl(props) {
     return el(TextControl, { type: 'number', label: props.label, value: props.value, onChange: function(v) { props.onChange(parseInt(v) || props.min || 0) } });
   }
 
-  // Post Hero
-  wp.blocks.registerBlockType('prism/post-hero', {
+  // Composant réutilisable : rendu serveur en direct dans l'éditeur + sidebar réglages.
+  function DynamicBlock(props) {
+    var blockProps = useBlockProps();
+    return el('div', blockProps,
+      props.inspector,
+      el(Disabled, null,
+        el(ServerSideRender, {
+          block: props.name,
+          attributes: props.attributes,
+          className: 'lemag-block-editor-render'
+        })
+      )
+    );
+  }
+
+  // === POST HERO ===
+  wp.blocks.registerBlockType('lemag/post-hero', {
     apiVersion: 3,
     title: 'Post Hero',
     icon: 'cover-image',
-    category: 'prism',
+    category: 'lemag',
     attributes: {
       postsPerPage: { type: 'number', default: 1 },
       offset: { type: 'number', default: 0 },
       category: { type: 'number', default: 0 }
     },
     edit: function(props) {
-      var blockProps = useBlockProps();
-      return el('div', blockProps,
-        el(Inspector, {}, el(PanelBody, { title: 'Réglages' },
-          el(NumberControl, { label: 'Articles', value: props.attributes.postsPerPage, min: 1, onChange: function(v) { props.setAttributes({ postsPerPage: v }) } }),
-          el(NumberControl, { label: 'Offset', value: props.attributes.offset, min: 0, onChange: function(v) { props.setAttributes({ offset: v }) } }),
-          el(NumberControl, { label: 'Catégorie (ID)', value: props.attributes.category, min: 0, onChange: function(v) { props.setAttributes({ category: v }) } })
-        )),
-        el('div', { className: 'prism-block-preview' }, 'Post Hero — ' + props.attributes.postsPerPage + ' article(s)')
-      );
+      var inspector = el(Inspector, {}, el(PanelBody, { title: __('Réglages', 'lemag-blocks'), initialOpen: true },
+        el(NumberControl, { label: __('Articles', 'lemag-blocks'), value: props.attributes.postsPerPage, min: 1, onChange: function(v) { props.setAttributes({ postsPerPage: v }) } }),
+        el(NumberControl, { label: __('Offset', 'lemag-blocks'), value: props.attributes.offset, min: 0, onChange: function(v) { props.setAttributes({ offset: v }) } }),
+        el(NumberControl, { label: __('Catégorie (ID)', 'lemag-blocks'), value: props.attributes.category, min: 0, onChange: function(v) { props.setAttributes({ category: v }) } })
+      ));
+      return el(DynamicBlock, { name: 'lemag/post-hero', attributes: props.attributes, inspector: inspector });
     },
     save: function() { return null; }
   });
 
-  // Post Grid
-  wp.blocks.registerBlockType('prism/post-grid', {
+  // === POST GRID ===
+  wp.blocks.registerBlockType('lemag/post-grid', {
     apiVersion: 3,
     title: 'Post Grid',
     icon: 'grid-view',
-    category: 'prism',
+    category: 'lemag',
     attributes: {
       postsPerPage: { type: 'number', default: 6 },
       offset: { type: 'number', default: 0 },
@@ -48,47 +62,41 @@
       category: { type: 'number', default: 0 }
     },
     edit: function(props) {
-      var blockProps = useBlockProps();
-      return el('div', blockProps,
-        el(Inspector, {}, el(PanelBody, { title: 'Disposition' },
-          el(NumberControl, { label: 'Articles', value: props.attributes.postsPerPage, min: 1, onChange: function(v) { props.setAttributes({ postsPerPage: v }) } }),
-          el(NumberControl, { label: 'Colonnes', value: props.attributes.columns, min: 1, onChange: function(v) { props.setAttributes({ columns: v }) } }),
-          el(NumberControl, { label: 'Offset', value: props.attributes.offset, min: 0, onChange: function(v) { props.setAttributes({ offset: v }) } }),
-          el(NumberControl, { label: 'Catégorie (ID)', value: props.attributes.category, min: 0, onChange: function(v) { props.setAttributes({ category: v }) } })
-        )),
-        el('div', { className: 'prism-block-preview' }, 'Post Grid — ' + props.attributes.columns + ' col × ' + props.attributes.postsPerPage + ' articles')
-      );
+      var inspector = el(Inspector, {}, el(PanelBody, { title: __('Disposition', 'lemag-blocks'), initialOpen: true },
+        el(NumberControl, { label: __('Articles', 'lemag-blocks'), value: props.attributes.postsPerPage, min: 1, onChange: function(v) { props.setAttributes({ postsPerPage: v }) } }),
+        el(NumberControl, { label: __('Colonnes', 'lemag-blocks'), value: props.attributes.columns, min: 1, onChange: function(v) { props.setAttributes({ columns: v }) } }),
+        el(NumberControl, { label: __('Offset', 'lemag-blocks'), value: props.attributes.offset, min: 0, onChange: function(v) { props.setAttributes({ offset: v }) } }),
+        el(NumberControl, { label: __('Catégorie (ID)', 'lemag-blocks'), value: props.attributes.category, min: 0, onChange: function(v) { props.setAttributes({ category: v }) } })
+      ));
+      return el(DynamicBlock, { name: 'lemag/post-grid', attributes: props.attributes, inspector: inspector });
     },
     save: function() { return null; }
   });
 
-  // Post Card
-  wp.blocks.registerBlockType('prism/post-card', {
+  // === POST CARD ===
+  wp.blocks.registerBlockType('lemag/post-card', {
     apiVersion: 3,
     title: 'Post Card',
     icon: 'admin-post',
-    category: 'prism',
+    category: 'lemag',
     attributes: {
       postId: { type: 'number', default: 0 }
     },
     edit: function(props) {
-      var blockProps = useBlockProps();
-      return el('div', blockProps,
-        el(Inspector, {}, el(PanelBody, { title: 'Article' },
-          el(NumberControl, { label: 'ID article', value: props.attributes.postId, min: 0, onChange: function(v) { props.setAttributes({ postId: v }) } })
-        )),
-        el('div', { className: 'prism-block-preview' }, 'Post Card — ID: ' + (props.attributes.postId || '?'))
-      );
+      var inspector = el(Inspector, {}, el(PanelBody, { title: __('Article', 'lemag-blocks'), initialOpen: true },
+        el(NumberControl, { label: __('ID article', 'lemag-blocks'), value: props.attributes.postId, min: 0, onChange: function(v) { props.setAttributes({ postId: v }) } })
+      ));
+      return el(DynamicBlock, { name: 'lemag/post-card', attributes: props.attributes, inspector: inspector });
     },
     save: function() { return null; }
   });
 
-  // Category Section
-  wp.blocks.registerBlockType('prism/category-section', {
+  // === CATEGORY SECTION ===
+  wp.blocks.registerBlockType('lemag/category-section', {
     apiVersion: 3,
     title: 'Category Section',
     icon: 'category',
-    category: 'prism',
+    category: 'lemag',
     attributes: {
       title: { type: 'string', default: '' },
       category: { type: 'number', default: 0 },
@@ -96,74 +104,69 @@
       accentColor: { type: 'string', default: '' }
     },
     edit: function(props) {
-      var blockProps = useBlockProps();
-      return el('div', blockProps,
-        el(Inspector, {}, el(PanelBody, { title: 'Catégorie' },
-          el(TextControl, { label: 'Titre', value: props.attributes.title, onChange: function(v) { props.setAttributes({ title: v }) } }),
-          el(NumberControl, { label: 'ID Catégorie', value: props.attributes.category, min: 0, onChange: function(v) { props.setAttributes({ category: v }) } }),
-          el(NumberControl, { label: 'Articles', value: props.attributes.postsPerPage, min: 1, onChange: function(v) { props.setAttributes({ postsPerPage: v }) } }),
-          el(TextControl, { label: 'Couleur accent', value: props.attributes.accentColor, onChange: function(v) { props.setAttributes({ accentColor: v }) } })
-        )),
-        el('div', { className: 'prism-block-preview' }, 'Category Section — ' + (props.attributes.title || 'Catégorie') + ' (' + props.attributes.postsPerPage + ' articles)')
-      );
+      var inspector = el(Inspector, {}, el(PanelBody, { title: __('Catégorie', 'lemag-blocks'), initialOpen: true },
+        el(TextControl, { label: __('Titre', 'lemag-blocks'), value: props.attributes.title, onChange: function(v) { props.setAttributes({ title: v }) } }),
+        el(NumberControl, { label: __('ID Catégorie', 'lemag-blocks'), value: props.attributes.category, min: 0, onChange: function(v) { props.setAttributes({ category: v }) } }),
+        el(NumberControl, { label: __('Articles', 'lemag-blocks'), value: props.attributes.postsPerPage, min: 1, onChange: function(v) { props.setAttributes({ postsPerPage: v }) } }),
+        el(TextControl, { label: __('Couleur accent', 'lemag-blocks'), value: props.attributes.accentColor, onChange: function(v) { props.setAttributes({ accentColor: v }) } })
+      ));
+      return el(DynamicBlock, { name: 'lemag/category-section', attributes: props.attributes, inspector: inspector });
     },
     save: function() { return null; }
   });
 
-  // Featured Posts
-  wp.blocks.registerBlockType('prism/featured-posts', {
+  // === FEATURED POSTS ===
+  wp.blocks.registerBlockType('lemag/featured-posts', {
     apiVersion: 3,
     title: 'Featured Posts',
     icon: 'star-filled',
-    category: 'prism',
+    category: 'lemag',
     attributes: {
       title: { type: 'string', default: 'À la une' },
       postsPerPage: { type: 'number', default: 5 },
       category: { type: 'number', default: 0 }
     },
     edit: function(props) {
-      var blockProps = useBlockProps();
-      return el('div', blockProps,
-        el(Inspector, {}, el(PanelBody, { title: 'Réglages' },
-          el(TextControl, { label: 'Titre', value: props.attributes.title, onChange: function(v) { props.setAttributes({ title: v }) } }),
-          el(NumberControl, { label: 'Articles', value: props.attributes.postsPerPage, min: 1, onChange: function(v) { props.setAttributes({ postsPerPage: v }) } }),
-          el(NumberControl, { label: 'Catégorie (ID)', value: props.attributes.category, min: 0, onChange: function(v) { props.setAttributes({ category: v }) } })
-        )),
-        el('div', { className: 'prism-block-preview' }, 'Featured Posts — ' + props.attributes.title + ' (' + props.attributes.postsPerPage + ' articles)')
-      );
+      var inspector = el(Inspector, {}, el(PanelBody, { title: __('Réglages', 'lemag-blocks'), initialOpen: true },
+        el(TextControl, { label: __('Titre', 'lemag-blocks'), value: props.attributes.title, onChange: function(v) { props.setAttributes({ title: v }) } }),
+        el(NumberControl, { label: __('Articles', 'lemag-blocks'), value: props.attributes.postsPerPage, min: 1, onChange: function(v) { props.setAttributes({ postsPerPage: v }) } }),
+        el(NumberControl, { label: __('Catégorie (ID)', 'lemag-blocks'), value: props.attributes.category, min: 0, onChange: function(v) { props.setAttributes({ category: v }) } })
+      ));
+      return el(DynamicBlock, { name: 'lemag/featured-posts', attributes: props.attributes, inspector: inspector });
     },
     save: function() { return null; }
   });
 
-  // Magazine Headline
-  wp.blocks.registerBlockType('prism/magazine-headline', {
+  // === MAGAZINE HEADLINE ===
+  wp.blocks.registerBlockType('lemag/magazine-headline', {
     apiVersion: 3,
     title: 'Magazine Headline',
     icon: 'align-pull-left',
-    category: 'prism',
+    category: 'lemag',
     attributes: {},
-    edit: function() {
-      var blockProps = useBlockProps();
-      return el('div', blockProps,
-        el('div', { className: 'prism-block-preview' }, 'Magazine Headline — 1 article hero + 4 en grille (auto)')
-      );
+    edit: function(props) {
+      var inspector = el(Inspector, {}, el(PanelBody, { title: __('Réglages', 'lemag-blocks'), initialOpen: true },
+        el('p', null, __('1 article hero + 4 en grille (auto). Aucun réglage.', 'lemag-blocks'))
+      ));
+      return el(DynamicBlock, { name: 'lemag/magazine-headline', attributes: props.attributes, inspector: inspector });
     },
     save: function() { return null; }
   });
 
-  // Popular List
-  wp.blocks.registerBlockType('prism/popular-list', {
+  // === POPULAR LIST ===
+  wp.blocks.registerBlockType('lemag/popular-list', {
     apiVersion: 3,
-    title: 'Popular List', icon: 'list-view', category: 'prism',
-    attributes: { postsPerPage: { type: 'number', default: 9 } },
+    title: 'Popular List',
+    icon: 'list-view',
+    category: 'lemag',
+    attributes: {
+      postsPerPage: { type: 'number', default: 9 }
+    },
     edit: function(props) {
-      var blockProps = useBlockProps();
-      return el('div', blockProps,
-        el(Inspector, {}, el(PanelBody, { title: 'Réglages' },
-          el(NumberControl, { label: 'Articles', value: props.attributes.postsPerPage, min: 1, onChange: function(v) { props.setAttributes({ postsPerPage: v }) } })
-        )),
-        el('div', { className: 'prism-block-preview' }, 'Popular List — ' + props.attributes.postsPerPage + ' articles numérotés')
-      );
+      var inspector = el(Inspector, {}, el(PanelBody, { title: __('Réglages', 'lemag-blocks'), initialOpen: true },
+        el(NumberControl, { label: __('Articles', 'lemag-blocks'), value: props.attributes.postsPerPage, min: 1, onChange: function(v) { props.setAttributes({ postsPerPage: v }) } })
+      ));
+      return el(DynamicBlock, { name: 'lemag/popular-list', attributes: props.attributes, inspector: inspector });
     },
     save: function() { return null; }
   });

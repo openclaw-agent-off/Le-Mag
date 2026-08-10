@@ -21,7 +21,7 @@
     </div>
     <div class="pagination"><?php the_posts_pagination(); ?></div>
   <?php else: ?>
-    <p><?php esc_html_e('Aucun article.', 'prism'); ?></p>
+    <p><?php esc_html_e('Aucun article.', 'lemag'); ?></p>
   <?php endif; ?>
 </main>
 

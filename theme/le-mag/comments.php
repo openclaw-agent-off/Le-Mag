@@ -7,7 +7,7 @@ if (post_password_required()) return;
     <h3 class="comments-title">
       <?php
       $count = get_comments_number();
-      printf(_n('%d commentaire', '%d commentaires', $count, 'prism'), $count);
+      printf(_n('%d commentaire', '%d commentaires', $count, 'lemag'), $count);
       ?>
     </h3>
     <ol class="comment-list">
@@ -17,7 +17,7 @@ if (post_password_required()) return;
   <?php endif; ?>
 
   <?php if (!comments_open() && get_comments_number()): ?>
-    <p><?php esc_html_e('Commentaires fermés.', 'prism'); ?></p>
+    <p><?php esc_html_e('Commentaires fermés.', 'lemag'); ?></p>
   <?php endif; ?>
 
   <?php if (comments_open()): ?>

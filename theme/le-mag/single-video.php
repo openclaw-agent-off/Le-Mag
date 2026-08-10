@@ -1,6 +1,12 @@
-<?php get_header(); ?>
+<?php
+/**
+ * Template pour articles avec vidéo (format video).
+ * Détecté automatiquement par lemag_get_post_format_type().
+ */
+get_header();
+?>
 <div class="article-layout container">
-  <article <?php post_class('article-content'); ?>>
+  <article <?php post_class('article-content lemag-single-video'); ?>>
     <?php while (have_posts()): the_post(); ?>
       <?php echo lemag_breadcrumb(); ?>
       <span class="hero-cat"><?php the_category(', '); ?></span>
@@ -9,7 +15,30 @@
         <span><?php echo get_avatar(get_the_author_meta('ID'), 24, '', '', ['class' => 'avatar-img']); ?></span>
         <span><?php esc_html_e('Par', 'lemag'); ?> <?php the_author_posts_link(); ?></span>
         <span><?php echo get_the_date(); ?></span>
-        <span><?php echo esc_html(sprintf(_n('%d min de lecture', '%d min de lecture', lemag_reading_time(), 'lemag'), lemag_reading_time())); ?></span>
+        <span><?php echo esc_html(sprintf(__('%d min de lecture', 'lemag'), lemag_reading_time())); ?></span>
+      </div>
+      <div class="lemag-video-wrapper">
+        <?php
+        $content = get_the_content();
+        // Détection d'un embed vidéo (iframe ou URL YouTube/Vimeo).
+        $video_url = '';
+        if (preg_match('#<iframe[^>]*src=["\'](https?://[^"\']*)["\']#i', $content, $m)) {
+            $video_url = $m[1];
+        } elseif (preg_match('#https?://(?:www\.)?(?:youtube\.com/(?:watch\?v=|embed/)|youtu\.be/|vimeo\.com/)[\w\-]+#i', $content, $m)) {
+            $video_url = $m[0];
+        }
+        if ($video_url) {
+            echo '<div class="lemag-video-embed">' . wp_oembed_get($video_url) . '</div>';
+        }
+        // Rendu du bloc vidéo/embed Gutenberg.
+        $blocks = parse_blocks($content);
+        foreach ($blocks as $block) {
+            if ($block['blockName'] === 'core/video' || $block['blockName'] === 'core/embed') {
+                echo render_block($block);
+                break;
+            }
+        }
+        ?>
       </div>
       <?php if (has_post_thumbnail()): ?>
         <figure class="post-thumbnail"><?php the_post_thumbnail('full'); ?></figure>
@@ -84,11 +113,7 @@
           <?php endif; ?>
         </nav>
       <?php endif; ?>
-      <?php
-      if (comments_open() || get_comments_number()):
-        comments_template();
-      endif;
-      ?>
+      <?php if (comments_open() || get_comments_number()) comments_template(); ?>
     <?php endwhile; ?>
   </article>
   <aside class="sidebar lemag-sticky-sidebar">

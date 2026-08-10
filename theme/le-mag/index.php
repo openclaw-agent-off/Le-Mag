@@ -33,7 +33,7 @@
 <main class="container">
 
   <div class="section-header">
-    <h2 class="section-title"><?php esc_html_e('Derniers articles', 'prism'); ?></h2>
+    <h2 class="section-title"><?php esc_html_e('Derniers articles', 'lemag'); ?></h2>
   </div>
 
   <?php
@@ -72,14 +72,14 @@
       ?>
     </div>
   <?php else: ?>
-    <p><?php esc_html_e('Aucun article.', 'prism'); ?></p>
+    <p><?php esc_html_e('Aucun article.', 'lemag'); ?></p>
   <?php endif; wp_reset_postdata(); ?>
 
 </main>
 
 <?php else: ?>
   <main class="container">
-    <p><?php esc_html_e('Aucun article.', 'prism'); ?></p>
+    <p><?php esc_html_e('Aucun article.', 'lemag'); ?></p>
   </main>
 <?php endif; ?>
 

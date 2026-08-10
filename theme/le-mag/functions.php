@@ -3,24 +3,29 @@
  * Le Mag — Classic Theme
  *
  * @package LeMag
- * @copyright 2026 Pressly
+ * @copyright 2026 Skills Vault
  */
 defined('ABSPATH') || exit;
 
-define('PRISM_VERSION', '1.7.3');
+define('LEMAG_VERSION', '1.8.1');
 
 // CSS + Fonts + Menu JS
 add_action('wp_enqueue_scripts', function (): void {
     $uri = get_template_directory_uri();
-    $ver = PRISM_VERSION;
+    $ver = LEMAG_VERSION;
 
     wp_enqueue_style('lemag-fonts',
         'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&display=swap',
         [], null);
 
+    // FIX: on enquee aussi style.css (en-tête du thème) pour conformité WordPress + diagnostics.
+    wp_enqueue_style('lemag-style',
+        "$uri/style.css",
+        [], $ver);
+
     wp_enqueue_style('lemag-main',
         "$uri/assets/css/main.css",
-        ['lemag-fonts'], $ver);
+        ['lemag-fonts', 'lemag-style'], $ver);
 
     wp_enqueue_script('lemag-menu',
         "$uri/assets/js/menu.js",
@@ -33,7 +38,7 @@ add_action('wp_enqueue_scripts', function (): void {
 
 // Theme supports
 add_action('after_setup_theme', function (): void {
-    load_theme_textdomain('prism', get_template_directory() . '/languages');
+    load_theme_textdomain('lemag', get_template_directory() . '/languages');
 
     add_theme_support('automatic-feed-links');
     add_theme_support('title-tag');
@@ -49,32 +54,50 @@ add_action('after_setup_theme', function (): void {
     add_editor_style('assets/css/main.css');
 
     register_nav_menus([
-        'primary' => __('Menu principal', 'prism'),
-        'secondary' => __('Secondary Nav', 'prism'),
+        'primary' => __('Menu principal', 'lemag'),
+        'secondary' => __('Secondary Nav', 'lemag'),
     ]);
 });
 
 // Sidebar
 add_action('widgets_init', function (): void {
     register_sidebar([
-        'name'          => __('Sidebar', 'prism'),
+        'name'          => __('Sidebar', 'lemag'),
         'id'            => 'sidebar-1',
         'before_widget' => '<div class="sidebar-box">',
         'after_widget'  => '</div>',
         'before_title'  => '<h3>',
         'after_title'   => '</h3>',
     ]);
+    register_sidebar([
+        'name'          => __('Sidebar Footer', 'lemag'),
+        'id'            => 'sidebar-footer',
+        'before_widget' => '<div class="footer-widget">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h4>',
+        'after_title'   => '</h4>',
+    ]);
 });
+
+// Données structurées JSON-LD pour SEO
+add_action('wp_head', function (): void {
+    echo lemag_json_ld();
+}, 1);
+
+// Support des formats de post natifs (compatibilité avec lemag_format taxonomy)
+add_action('after_setup_theme', function (): void {
+    add_theme_support('post-formats', ['video', 'gallery', 'audio', 'standard']);
+}, 11);
 
 // Patterns
 add_action('init', function (): void {
     if (!function_exists('register_block_pattern_category')) return;
     register_block_pattern_category('lemag-magazine', [
-        'label' => __('Le Mag — Kits', 'prism'),
+        'label' => __('Le Mag — Kits', 'lemag'),
     ]);
     if (function_exists('register_block_style')) {
-        register_block_style('core/post-title', ['name' => 'hero', 'label' => __('Hero', 'prism')]);
-        register_block_style('core/query', ['name' => 'grid', 'label' => __('Grid', 'prism')]);
+        register_block_style('core/post-title', ['name' => 'hero', 'label' => __('Hero', 'lemag')]);
+        register_block_style('core/query', ['name' => 'grid', 'label' => __('Grid', 'lemag')]);
     }
 });
 
@@ -83,3 +106,9 @@ require_once get_template_directory() . '/inc/mega-menu.php';
 
 // Customizer
 require_once get_template_directory() . '/inc/customizer.php';
+
+// Helpers magazine (breadcrumb, related, lecture time, share, trending)
+require_once get_template_directory() . '/inc/helpers.php';
+
+// Taxonomies personnalisées (Série, Format) + template loader
+require_once get_template_directory() . '/inc/taxonomies.php';

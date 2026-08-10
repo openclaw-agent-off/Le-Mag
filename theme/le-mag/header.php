@@ -33,14 +33,14 @@
           echo '</ul>';
         },
         'depth'          => 3,
-        'walker'         => new Prism_Mega_Walker(),
+        'walker'         => new LeMag_Mega_Walker(),
       ]);
       ?>
     </nav>
   </div>
-  <?php $prism_modules = function_exists('prism_modules') ? prism_modules() : []; ?>
-  <?php if (!empty($prism_modules['secondary-nav']['active'])): ?>
-    <nav class="secondary-nav" aria-label="<?php esc_attr_e('Navigation secondaire', 'prism'); ?>">
+  <?php $lemag_hf = function_exists('lemag_hf_settings') ? lemag_hf_settings() : []; ?>
+  <?php if (!empty($lemag_hf['secondary_nav'])): ?>
+    <nav class="secondary-nav" aria-label="<?php esc_attr_e('Navigation secondaire', 'lemag'); ?>">
       <?php wp_nav_menu(['theme_location' => 'secondary', 'menu_class' => 'secondary-nav-list', 'container' => false, 'fallback_cb' => false]); ?>
     </nav>
   <?php endif; ?>

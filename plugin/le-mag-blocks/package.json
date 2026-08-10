@@ -1,0 +1,12 @@
+{
+  "name": "le-mag-blocks",
+  "version": "1.8.1",
+  "description": "Blocs dynamiques pour le thème Le Mag. JS éditeur écrit en vanilla JS (pas de build step requis).",
+  "private": true,
+  "scripts": {
+    "lint:js": "wp-scripts lint-js build/blocks.js"
+  },
+  "devDependencies": {
+    "@wordpress/scripts": "^30.0.0"
+  }
+}

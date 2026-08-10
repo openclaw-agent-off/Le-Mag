@@ -1,6 +1,11 @@
-<?php get_header(); ?>
+<?php
+/**
+ * Template pour articles avec audio (format audio / podcast).
+ */
+get_header();
+?>
 <div class="article-layout container">
-  <article <?php post_class('article-content'); ?>>
+  <article <?php post_class('article-content lemag-single-audio'); ?>>
     <?php while (have_posts()): the_post(); ?>
       <?php echo lemag_breadcrumb(); ?>
       <span class="hero-cat"><?php the_category(', '); ?></span>
@@ -9,7 +14,19 @@
         <span><?php echo get_avatar(get_the_author_meta('ID'), 24, '', '', ['class' => 'avatar-img']); ?></span>
         <span><?php esc_html_e('Par', 'lemag'); ?> <?php the_author_posts_link(); ?></span>
         <span><?php echo get_the_date(); ?></span>
-        <span><?php echo esc_html(sprintf(_n('%d min de lecture', '%d min de lecture', lemag_reading_time(), 'lemag'), lemag_reading_time())); ?></span>
+        <span><?php echo esc_html(sprintf(__('%d min de lecture', 'lemag'), lemag_reading_time())); ?></span>
+        <span><?php esc_html_e('Podcast', 'lemag'); ?></span>
+      </div>
+      <div class="lemag-audio-player">
+        <?php
+        $blocks = parse_blocks(get_the_content());
+        foreach ($blocks as $block) {
+            if ($block['blockName'] === 'core/audio' || $block['blockName'] === 'core/file') {
+                echo render_block($block);
+                break;
+            }
+        }
+        ?>
       </div>
       <?php if (has_post_thumbnail()): ?>
         <figure class="post-thumbnail"><?php the_post_thumbnail('full'); ?></figure>
@@ -84,11 +101,7 @@
           <?php endif; ?>
         </nav>
       <?php endif; ?>
-      <?php
-      if (comments_open() || get_comments_number()):
-        comments_template();
-      endif;
-      ?>
+      <?php if (comments_open() || get_comments_number()) comments_template(); ?>
     <?php endwhile; ?>
   </article>
   <aside class="sidebar lemag-sticky-sidebar">

@@ -1,7 +1,20 @@
-<?php get_header(); ?>
+<?php
+/**
+ * Template pour articles avec galerie (format gallery).
+ */
+get_header();
+?>
 <div class="article-layout container">
-  <article <?php post_class('article-content'); ?>>
-    <?php while (have_posts()): the_post(); ?>
+  <article <?php post_class('article-content lemag-single-gallery'); ?>>
+    <?php while (have_posts()): the_post();
+      $gallery_ids = [];
+      $blocks = parse_blocks(get_the_content());
+      foreach ($blocks as $block) {
+          if ($block['blockName'] === 'core/gallery' && !empty($block['attrs']['ids'])) {
+              $gallery_ids = array_merge($gallery_ids, $block['attrs']['ids']);
+          }
+      }
+    ?>
       <?php echo lemag_breadcrumb(); ?>
       <span class="hero-cat"><?php the_category(', '); ?></span>
       <h1><?php the_title(); ?></h1>
@@ -9,10 +22,21 @@
         <span><?php echo get_avatar(get_the_author_meta('ID'), 24, '', '', ['class' => 'avatar-img']); ?></span>
         <span><?php esc_html_e('Par', 'lemag'); ?> <?php the_author_posts_link(); ?></span>
         <span><?php echo get_the_date(); ?></span>
-        <span><?php echo esc_html(sprintf(_n('%d min de lecture', '%d min de lecture', lemag_reading_time(), 'lemag'), lemag_reading_time())); ?></span>
+        <span><?php echo esc_html(sprintf(__('%d min de lecture', 'lemag'), lemag_reading_time())); ?></span>
+        <?php if ($gallery_ids): ?>
+          <span><?php echo esc_html(sprintf(_n('%d photo', '%d photos', count($gallery_ids), 'lemag'), count($gallery_ids))); ?></span>
+        <?php endif; ?>
       </div>
       <?php if (has_post_thumbnail()): ?>
         <figure class="post-thumbnail"><?php the_post_thumbnail('full'); ?></figure>
+      <?php endif; ?>
+      <?php if ($gallery_ids): ?>
+        <div class="lemag-gallery-grid">
+          <?php foreach ($gallery_ids as $gid):
+            $img = wp_get_attachment_image($gid, 'medium_large');
+            if ($img) echo '<figure class="lemag-gallery-item">' . $img . '</figure>';
+          endforeach; ?>
+        </div>
       <?php endif; ?>
       <div class="entry-content">
         <?php the_content(); ?>
@@ -84,11 +108,7 @@
           <?php endif; ?>
         </nav>
       <?php endif; ?>
-      <?php
-      if (comments_open() || get_comments_number()):
-        comments_template();
-      endif;
-      ?>
+      <?php if (comments_open() || get_comments_number()) comments_template(); ?>
     <?php endwhile; ?>
   </article>
   <aside class="sidebar lemag-sticky-sidebar">
